@@ -7,7 +7,7 @@ import {
 import Sidebar from './components/Sidebar';
 import SettingsModal from './components/SettingsModal';
 import Markdown from './components/Markdown';
-import { streamGeminiResponse } from './services/gemini';
+import { sendChatRequest } from './services/chat';
 
 // Initial Suggested Prompts
 const SUGGESTED_PROMPTS = [
@@ -272,48 +272,29 @@ export default function App() {
     abortControllerRef.current = controller;
 
     try {
-      // Fetch full dialog history formatted for model
       const dialogHistory = currentChat.messages.map(m => ({
         role: m.role,
         content: m.content
       }));
 
-      const responseGenerator = streamGeminiResponse({
+      const aiResponse = await sendChatRequest({
         model,
         messages: dialogHistory,
         signal: controller.signal
       });
 
-      let accumulatedResponse = '';
-
-      for await (const chunk of responseGenerator) {
-        accumulatedResponse += chunk;
-        setChats(prev => prev.map(c => {
-          if (c.id === targetChatId) {
-            return {
-              ...c,
-              messages: c.messages.map(m => m.id === aiMessageId ? { ...m, content: accumulatedResponse } : m)
-            };
-          }
-          return c;
-        }));
-      }
-
-      // Finalize and remove streaming flag
       setChats(prev => prev.map(c => {
         if (c.id === targetChatId) {
           return {
             ...c,
-            messages: c.messages.map(m => m.id === aiMessageId ? { ...m, isStreaming: false } : m)
+            messages: c.messages.map(m => m.id === aiMessageId ? { ...m, content: aiResponse, isStreaming: false } : m)
           };
         }
         return c;
       }));
-
     } catch (err) {
       if (err.name === 'AbortError' || controller.signal.aborted) {
-        console.log('Stream stopped by user.');
-        // Finalize state gracefully
+        console.log('Request stopped by user.');
         setChats(prev => prev.map(c => {
           if (c.id === targetChatId) {
             return {
@@ -324,18 +305,17 @@ export default function App() {
           return c;
         }));
       } else {
-        console.error('Core streaming failed:', err);
-        const errText = err.message || "An unexpected error occurred. Please check your API key / internet connection and try again.";
+        console.error('Chat request failed:', err);
+        const errText = err.message || 'An unexpected error occurred. Please check your connection and try again.';
         setStreamError(errText);
-        
-        // Render detailed error in bubble
+
         setChats(prev => prev.map(c => {
           if (c.id === targetChatId) {
             return {
               ...c,
-              messages: c.messages.map(m => m.id === aiMessageId ? { 
-                ...m, 
-                content: `❌ **Komsiri Stream Error**\n\n${errText}`, 
+              messages: c.messages.map(m => m.id === aiMessageId ? {
+                ...m,
+                content: `❌ Komsiri Error\n\n${errText}`,
                 isStreaming: false,
                 isError: true
               } : m)

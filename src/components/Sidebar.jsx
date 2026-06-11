@@ -61,20 +61,20 @@ export default function Sidebar({
       {/* Main Sidebar Panel */}
       <aside
         className={`fixed inset-y-0 left-0 z-40 flex w-[280px] flex-col border-r border-slate-800 bg-slate-950/80 backdrop-blur-xl transition-transform duration-300 md:translate-x-0 ${
-          isOpen ? 'translate-x-[0]' : '-translate-x-full'
+          isOpen ? 'translate-x-0' : '-translate-x-full'
         } shrink-0 md:static md:w-[260px] lg:w-[280px]`}
         id="komsiri-sidebar"
       >
         {/* Brand Banner */}
         <div className="flex h-16 items-center gap-3 px-5 border-b border-slate-800/60">
-          <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-red-600 to-blue-600 p-[2px] shadow-lg shadow-red-500/10">
+          <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-linear-to-tr from-red-600 to-blue-600 p-[2px] shadow-lg shadow-red-500/10">
             <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-slate-900">
               <Sparkles className="h-4.5 w-4.5 text-red-500 fill-red-500/10 animate-pulse" />
             </div>
           </div>
           <div className="flex flex-col">
             <h1 className="text-base font-bold tracking-tight text-white flex items-center gap-1">
-              Komsiri <span className="bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent font-extrabold text-[12px] uppercase tracking-widest">AI</span>
+              Komsiri <span className="bg-linear-to-r from-red-500 to-blue-500 bg-clip-text text-transparent font-extrabold text-[12px] uppercase tracking-widest">AI</span>
             </h1>
             <span className="text-[10px] font-mono text-slate-500">Premium Portal v1.2</span>
           </div>

@@ -15,6 +15,10 @@ View your app in AI Studio: https://ai.studio/apps/71ca517a-b003-43a2-a734-aa07a
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+2. Set the `GEMINI_API_KEY` as an environment variable in Vercel for production.
+   - Do not hardcode the key in frontend source code.
+   - For local testing with the Vercel development server, use `.env.local`:
+     `GEMINI_API_KEY=your_key_here`
+3. Run the local app frontend with Vite:
    `npm run dev`
+4. Use `vercel dev` to run the secure serverless backend locally together with the frontend.
