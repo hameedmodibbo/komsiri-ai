@@ -1,0 +1,6 @@
+{
+  "name": "Komsiri AI",
+  "description": "A premium, direct-to-chat AI assistant powered by Google Gemini API. Fully offline-persistent and installable.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
