@@ -60,9 +60,9 @@ export default function Sidebar({
 
       {/* Main Sidebar Panel */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-[280px] flex-col border-r border-slate-800 bg-slate-950/80 backdrop-blur-xl transition-transform duration-300 md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-40 flex w-70 flex-col border-r border-slate-800 bg-slate-950/80 backdrop-blur-xl transition-transform duration-300 md:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
-        } shrink-0 md:static md:w-[260px] lg:w-[280px]`}
+        } shrink-0 md:static md:w-65 lg:w-70`}
         id="komsiri-sidebar"
       >
         {/* Brand Banner */}
@@ -87,7 +87,7 @@ export default function Sidebar({
               onNewChat();
               if (onClose) onClose(); // close sidebar drawer on mobile
             }}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-red-600 to-red-700 font-medium hover:from-red-500 hover:to-red-600 text-sm text-white px-4 py-3 shadow-[0_4px_12px_rgba(239,68,68,0.25)] hover:shadow-[0_4px_20px_rgba(239,68,68,0.4)] active:scale-[0.98] transition-all cursor-pointer"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-red-600 to-red-700 font-medium hover:from-red-500 hover:to-red-600 text-sm text-white px-4 py-3 shadow-[0_4px_12px_rgba(239,68,68,0.25)] hover:shadow-[0_4px_20px_rgba(239,68,68,0.4)] active:scale-[0.98] transition-all cursor-pointer"
             id="new-chat-btn"
           >
             <Plus className="w-4 h-4 shrink-0" />
